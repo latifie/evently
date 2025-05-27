@@ -1,93 +1,199 @@
-# Evently
+# MERN-APP BOILERPLATE README
 
+Welcome to the MERN-APP boilerplate, a complete solution to quickly start a modern and secure full-stack application. This project is designed to help you create robust applications with secure authentication, role management, and much more.
 
+## Table of Contents
 
-## Getting started
+<details>
+  <summary>📑 Table of Contents</summary>
+  
+  - [Author](#author)
+  - [Technologies Used](#technologies-used)
+  - [Requirements](#requirements)
+  - [Backend](#backend)
+  - [Frontend](#frontend)
+  - [Run the Application](#run-the-application)
+  - [Application Configuration](#application-configuration)
+  - [Unit Tests](#unit-tests)
+  - [Husky](#husky)
+  - [Features](#features)
+  - [Contribution](#contribution)
+  
+</details>
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Author
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+👨‍💻 **[Téo Villet](https://github.com/teovlt)** - Web Developer
 
-## Add your files
+## Technologies Used
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 
+## Requirements
+
+📦 Before starting, make sure you have the following installed:
+
+- **Node.js**: v22.x or higher
+- **pnpm**: v10.x or higher
+- **Git**: v2.47.x or higher (for Husky hooks)
+- **A modern browser** (Chrome, Firefox, etc.)
+
+You can check your installed versions using:
+
+```bash
+node -v
+pnpm -v
+git --version
 ```
-cd existing_repo
-git remote add origin https://gricad-gitlab.univ-grenoble-alpes.fr/piconf/evently.git
-git branch -M main
-git push -uf origin main
+
+## Backend
+
+🔙 Navigate to the `server` directory.  
+You need to create a **.env** file containing the backend environment variables.
+
+Example:
+
+```env
+PORT=
+MONG_URI=
+MONG_URI_TEST=
+SECRET_ACCESS_TOKEN=
+CORS_ORIGIN=
 ```
 
-## Integrate with your tools
+- **PORT** → The port your server will use.
+- **MONG_URI** → MongoDB connection string (don’t forget to allow your IP in MongoDB Atlas if applicable).
+- **MONG_URI_TEST** → Test DB URI (data gets wiped during tests — use a separate DB).
+- **SECRET_ACCESS_TOKEN** → JWT token secret (use this command : *openssl rand -base64 64*).
+- **CORS_ORIGIN** → Frontend URL for CORS setup.
 
-- [ ] [Set up project integrations](https://gricad-gitlab.univ-grenoble-alpes.fr/piconf/evently/-/settings/integrations)
+Refer to the `.env.example` file in the `server` directory for guidance.
 
-## Collaborate with your team
+## Frontend
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+🎨 Navigate to the `client` directory and create a **.env** file:
 
-## Test and Deploy
+```env
+VITE_API_URL=
+```
 
-Use the built-in continuous integration in GitLab.
+- **VITE_API_URL** → URL of your backend server (e.g. `http://localhost:5000`)
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+See `.env.example` in `client` for reference.
 
-***
+## Run the Application
 
-# Editing this README
+⚡ Install and run the frontend and backend separately in two terminals:
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+**Terminal 1: Start the Frontend**
 
-## Suggestions for a good README
+```bash
+cd client
+pnpm i
+pnpm dev
+```
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+**Terminal 2: Start the Backend**
 
-## Name
-Choose a self-explaining name for your project.
+```bash
+cd server
+pnpm i
+pnpm dev
+```
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+You should see the following messages in the terminal:
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+```bash
+Server listenning on port ... 🚀
+Connected to the database 🧰
+```
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+Once both are running, go to [http://localhost:5173](http://localhost:5173) to see the application.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+## Application Configuration
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+This boilerplate includes a `config` table in the database which stores dynamic configuration values, including the **application name**.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+🧩 After cloning and launching the app:
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+1. **Register a new user** via the **Register** page (first user is an administrator by default).
+2. Access the **Admin Dashboard**.
+3. Go to the **Settings** section.
+4. Set your **application name** (APP_NAME).
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+📛 This name will be displayed in various places across the app, providing a personalized brand. Once configured, your application is fully ready to be extended for your use case.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+## Unit Tests
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+🧪 First, turn off the server if it's running, then run:
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+```bash
+pnpm run test
+```
 
-## License
-For open source projects, say how it is licensed.
+To check full test coverage:
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+```bash
+pnpm run coverage
+```
+
+The coverage report will be generated in the `server/coverage` folder.  
+Don’t forget to restart the server afterward.
+
+## Husky
+
+🐶 **Husky Integration**:
+
+This project uses **Husky** to automatically run code formatting and lint checks before each commit, ensuring a consistent codebase.
+If the pre-commit hook doesn’t work, verify that husky have the correct permissions:
+
+```bash
+chmod +x .husky/pre-commit
+```
+
+### Benefits
+
+- ✨ **Consistent Style**
+- 🛠️ **Less Manual Work**
+- ✅ **Reliable Codebase**
+
+## Features
+
+🚀 **Features:**
+
+- 📜 Log Management
+- 👥 User CRUD (Create, Read, Update, Delete)
+- 🔒 JWT-based Authentication
+- 🏢 Role-based Access Control (Admin, User)
+- ✅ Unit Testing with Coverage
+- 📝 Fully Commented Backend Code
+- 🔗 API Requests with Axios
+- 📊 Admin Dashboard
+- 🔐 Protected & Conditional Routing
+- 🌙 Light/Dark Theme Toggle
+- 🌍 i18n Multi-language Support
+- 🎨 TailwindCSS + ShadCN UI
+- 📋 Ready-to-use Auth Forms
+- 🔄 Prettier Formatting
+- 🖼 Avatar Upload with GIF support
+- 📡 Real-time Online Status via WebSocket
+- 🧩 Application Configuration via Database
+
+## Contribution
+
+🤝 We welcome contributions! To contribute:
+
+1. **Fork** the repository.
+2. Create a new branch: `git checkout -b feature/my-feature`.
+3. Commit your changes: `git commit -m 'Add my feature'`.
+4. Push to GitHub: `git push origin feature/my-feature`.
+5. Open a Pull Request.
+
+### Contribution Guidelines
+
+- Comment your code when necessary.
+- Follow naming and style conventions.
+- Add unit tests when applicable.

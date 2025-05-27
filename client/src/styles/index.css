@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 255 255 255;
+    --foreground: 10 10 10;
+    --card: 255 255 255;
+    --card-foreground: 10 10 10;
+    --popover: 255 255 255;
+    --popover-foreground: 10 10 10;
+    --primary: 23 23 23;
+    --primary-foreground: 250 250 250;
+    --secondary: 245 245 245;
+    --secondary-foreground: 23 23 23;
+    --muted: 245 245 245;
+    --muted-foreground: 115 115 115;
+    --accent: 245 245 245;
+    --accent-foreground: 23 23 23;
+    --destructive: 220 38 38;
+    --destructive-foreground: 250 250 250;
+    --success: 34 197 94;
+    --success-foreground: 250 250 250;
+    --border: 228 228 231;
+    --input: 228 228 231;
+    --ring: 10 10 10;
+    --chart-1: 255 181 114;
+    --chart-2: 66 184 160;
+    --chart-3: 61 88 102;
+    --chart-4: 255 201 117;
+    --chart-5: 255 160 97;
+    --radius: 0.5rem;
+    --sidebar-background: 250 250 250;
+    --sidebar-foreground: 68 68 68;
+    --sidebar-primary: 26 26 26;
+    --sidebar-primary-foreground: 250 250 250;
+    --sidebar-accent: 245 245 245;
+    --sidebar-accent-foreground: 26 26 26;
+    --sidebar-border: 219 234 254;
+    --sidebar-ring: 59 130 246;
+  }
+
+  .dark {
+    --background: 10 10 10;
+    --foreground: 250 250 250;
+    --card: 10 10 10;
+    --card-foreground: 250 250 250;
+    --popover: 10 10 10;
+    --popover-foreground: 250 250 250;
+    --primary: 250 250 250;
+    --primary-foreground: 23 23 23;
+    --secondary: 38 38 38;
+    --secondary-foreground: 250 250 250;
+    --muted: 38 38 38;
+    --muted-foreground: 163 163 163;
+    --accent: 38 38 38;
+    --accent-foreground: 250 250 250;
+    --destructive: 153 27 27;
+    --destructive-foreground: 250 250 250;
+    --success: 34 197 94;
+    --success-foreground: 250 250 250;
+    --border: 38 38 38;
+    --input: 38 38 38;
+    --ring: 212 212 212;
+    --chart-1: 96 165 250;
+    --chart-2: 74 222 128;
+    --chart-3: 253 186 116;
+    --chart-4: 168 85 247;
+    --chart-5: 244 63 94;
+    --sidebar-background: 26 26 26;
+    --sidebar-foreground: 245 245 245;
+    --sidebar-primary: 59 130 246;
+    --sidebar-primary-foreground: 255 255 255;
+    --sidebar-accent: 41 41 41;
+    --sidebar-accent-foreground: 245 245 245;
+    --sidebar-border: 41 41 41;
+    --sidebar-ring: 59 130 246;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  @keyframes loading {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .animate-loading {
+    animation: loading 1.2s infinite linear;
+    background-size: 200% auto;
+  }
+}
