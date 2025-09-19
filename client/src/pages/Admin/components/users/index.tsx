@@ -1,11 +1,12 @@
 import { axiosConfig } from "@/config/axiosConfig";
 import { useState } from "react";
 import { toast } from "sonner";
-import { DataTable } from "./data-table";
 import { getColumns } from "./columns";
-import { Dialog, DialogHeader, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogHeader, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { UserForm } from "./userForm";
 import { UserInterface } from "@/interfaces/User";
+import { DataTable } from "@/components/customs/dataTable";
+import { useTranslation } from "react-i18next";
 
 export const Users = () => {
   const [users, setUsers] = useState<UserInterface[]>([]);
@@ -15,6 +16,8 @@ export const Users = () => {
   const [selectedUser, setSelectedUser] = useState<UserInterface>();
   const [userCount, setUserCount] = useState(0);
 
+  const { t } = useTranslation();
+
   async function fetchUsers(page: number = 0, size: number = 10) {
     setLoading(true);
     try {
@@ -22,7 +25,7 @@ export const Users = () => {
       setUsers(response.data.users);
       setUserCount(response.data.count);
     } catch (error: any) {
-      toast.error(error.response?.data?.error);
+      toast.error(t(error.response.data.error));
     } finally {
       setLoading(false);
     }
@@ -53,20 +56,23 @@ export const Users = () => {
     <div>
       <div className="container px-4 mx-auto">
         <DataTable
-          userCount={userCount}
-          columns={getColumns(callback)}
+          columns={getColumns(callback, t)}
           data={users}
-          fetchUsers={fetchUsers}
+          dataCount={userCount}
+          fetchData={fetchUsers}
           isLoading={loading}
           callback={callback}
+          searchElement="username"
+          actions={["create"]}
         />
       </div>
       {openDialog && (
         <Dialog open={openDialog} onOpenChange={() => setOpenDialog(false)}>
           <DialogContent className="sm:max-w-[625px]">
             <DialogHeader>
-              <DialogTitle>{action.charAt(0).toUpperCase() + action.slice(1)} a user</DialogTitle>
-              {action === "create" && <DialogDescription>Here you can give life to a new user</DialogDescription>}
+              <DialogTitle>
+                {t(`pages.admin.users_page.actions_type.` + action)} {t("pages.admin.users_page.a_user")}
+              </DialogTitle>
             </DialogHeader>
             <UserForm dialog={setOpenDialog} refresh={fetchUsers} action={action} user={selectedUser} />
           </DialogContent>

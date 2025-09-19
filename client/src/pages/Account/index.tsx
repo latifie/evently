@@ -1,4 +1,4 @@
-import { Loading } from "@/components/ui/customs/Loading";
+import { Loading } from "@/components/customs/loading";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useAuthContext } from "@/contexts/authContext";
@@ -12,7 +12,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { axiosConfig } from "@/config/axiosConfig";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { InputFile } from "@/components/ui/customs/inputFile";
+import { InputFile } from "@/components/customs/inputFile";
 import { UpdatePasswordForm } from "./components/updatePasswordForm";
 import { Dialog } from "@radix-ui/react-dialog";
 import { EllipsisVertical, Trash } from "lucide-react";
@@ -187,16 +187,18 @@ export const Account = () => {
                 )}
               />
 
-              <FormItem className="flex items-end justify-between gap-4">
+              <FormItem>
                 <div className="flex flex-col w-full gap-2">
                   <FormLabel>{t("pages.account.password_label")}</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder={t("pages.account.password_placeholder")} disabled />
-                  </FormControl>
+                  <div className="flex items-center justify-between gap-4">
+                    <FormControl>
+                      <Input type="password" placeholder={t("pages.account.password_placeholder")} disabled />
+                    </FormControl>
+                    <Button type="button" variant="outline" onClick={() => setOpenUpdatePasswordDialog(true)} disabled={updateLoading}>
+                      {t("pages.account.change_password")}
+                    </Button>
+                  </div>
                 </div>
-                <Button type="button" variant="outline" onClick={() => setOpenUpdatePasswordDialog(true)} disabled={updateLoading}>
-                  {t("pages.account.change_password")}
-                </Button>
               </FormItem>
 
               <CardFooter className="px-0">

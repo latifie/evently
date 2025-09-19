@@ -12,6 +12,7 @@ Welcome to the MERN-APP boilerplate, a complete solution to quickly start a mode
   - [Requirements](#requirements)
   - [Backend](#backend)
   - [Frontend](#frontend)
+  - [Firebase OAuth Setup](#firebase-oauth-setup)
   - [Run the Application](#run-the-application)
   - [Application Configuration](#application-configuration)
   - [Unit Tests](#unit-tests)
@@ -36,9 +37,10 @@ Welcome to the MERN-APP boilerplate, a complete solution to quickly start a mode
 
 📦 Before starting, make sure you have the following installed:
 
-- **Node.js**: v22.x or higher
-- **pnpm**: v10.x or higher
-- **Git**: v2.47.x or higher (for Husky hooks)
+- [**Node.js**](https://nodejs.org/en): v22.x or higher
+- [**pnpm**](https://pnpm.io/fr/): v10.x or higher
+- [**Git**](https://git-scm.com/): v2.47.x or higher (for Husky hooks)
+- [**MongoDB**](https://www.mongodb.com/): v8.0.9 or higher
 - **A modern browser** (Chrome, Firefox, etc.)
 
 You can check your installed versions using:
@@ -67,7 +69,7 @@ CORS_ORIGIN=
 - **PORT** → The port your server will use.
 - **MONG_URI** → MongoDB connection string (don’t forget to allow your IP in MongoDB Atlas if applicable).
 - **MONG_URI_TEST** → Test DB URI (data gets wiped during tests — use a separate DB).
-- **SECRET_ACCESS_TOKEN** → JWT token secret (use this command : *openssl rand -base64 64*).
+- **SECRET_ACCESS_TOKEN** → JWT token secret (use this command : _openssl rand -base64 64_).
 - **CORS_ORIGIN** → Frontend URL for CORS setup.
 
 Refer to the `.env.example` file in the `server` directory for guidance.
@@ -83,6 +85,57 @@ VITE_API_URL=
 - **VITE_API_URL** → URL of your backend server (e.g. `http://localhost:5000`)
 
 See `.env.example` in `client` for reference.
+
+## Firebase OAuth Setup
+
+**Non mandatory**
+🔑 If you want to enable Google OAuth for user authentication, follow these steps to set up Firebase:
+
+🔐 This app uses **Firebase Authentication with Google OAuth** to let users sign in effortlessly.
+
+Here’s how to set it up quickly:
+
+1. Go to [console.firebase.google.com](https://console.firebase.google.com) and **create a new project**.
+2. Once inside your project, click on **“Authentication”** in the sidebar.
+3. Click on **“Get started”**, then select **Google** as the sign-in method.
+4. Enable the provider:
+   - (Optional) Change the **app name**
+   - Add a **support email**
+   - Save ✅
+
+Next up:
+
+5. Go back to your **Firebase dashboard**, and click the **web icon `</>`** to register a new web app.
+6. Enter your app name and move to the next step.  
+   You’ll get a config object like this:
+
+```js
+const firebaseConfig = {
+  apiKey: "XXXX",
+  authDomain: "XXXX.firebaseapp.com",
+  projectId: "XXXX",
+  storageBucket: "XXXX.appspot.com",
+  messagingSenderId: "XXXX",
+  appId: "XXXX",
+  measurementId: "XXXX", // 👉 not needed
+};
+```
+
+7. Copy every line **except `measurementId`** into your `.env` file inside the `client` folder:
+
+```env
+VITE_API_URL=...
+
+VITE_FIREBASE_API_KEY=XXXX
+VITE_FIREBASE_AUTH_DOMAIN=XXXX.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=XXXX
+VITE_FIREBASE_STORAGE_BUCKET=XXXX.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=XXXX
+VITE_FIREBASE_APP_ID=XXXX
+```
+
+8. Finally, click **“Go to Console”** to complete the setup.  
+   Your app is now connected to Firebase and ready to support Google OAuth login 🚀
 
 ## Run the Application
 
@@ -122,9 +175,9 @@ This boilerplate includes a `config` table in the database which stores dynamic 
 1. **Register a new user** via the **Register** page (first user is an administrator by default).
 2. Access the **Admin Dashboard**.
 3. Go to the **Settings** section.
-4. Set your **application name** (APP_NAME).
+4. Set the configuration you want for your application.
 
-📛 This name will be displayed in various places across the app, providing a personalized brand. Once configured, your application is fully ready to be extended for your use case.
+Once configured, your application is fully ready to be extended for your use case.
 
 ## Unit Tests
 
@@ -156,9 +209,9 @@ chmod +x .husky/pre-commit
 
 ### Benefits
 
-- ✨ **Consistent Style**
-- 🛠️ **Less Manual Work**
-- ✅ **Reliable Codebase**
+- **Consistent Style**
+- **Less Manual Work**
+- **Reliable Codebase**
 
 ## Features
 
@@ -181,6 +234,7 @@ chmod +x .husky/pre-commit
 - 🖼 Avatar Upload with GIF support
 - 📡 Real-time Online Status via WebSocket
 - 🧩 Application Configuration via Database
+- 🔑 OAuth with Google via Firebase
 
 ## Contribution
 

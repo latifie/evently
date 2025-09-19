@@ -1,4 +1,4 @@
-import { ChevronRight, LogOut, User } from "lucide-react";
+import { ChevronRight, House, LogOut, User, Wrench } from "lucide-react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { UserInterface } from "@/interfaces/User";
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 export function NavUser({ user }: { user: UserInterface | null }) {
   if (!user) return null;
@@ -24,6 +25,7 @@ export function NavUser({ user }: { user: UserInterface | null }) {
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLLIElement | null>(null);
+  const { t } = useTranslation();
 
   const handleClickOutside = (event: any) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -45,7 +47,7 @@ export function NavUser({ user }: { user: UserInterface | null }) {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
               onClick={() => setDropdownOpen((prev) => !prev)}
             >
               <Avatar className="w-8 h-8 rounded-lg">
@@ -59,7 +61,7 @@ export function NavUser({ user }: { user: UserInterface | null }) {
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
@@ -77,17 +79,29 @@ export function NavUser({ user }: { user: UserInterface | null }) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
+              <DropdownMenuItem className="flex items-center gap-2 hover:cursor-pointer" onClick={() => navigate("/")}>
+                {t("navbar.home")}
+                <DropdownMenuShortcut>
+                  <House className="w-4 h-4" />
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
               <DropdownMenuItem className="flex items-center gap-2 hover:cursor-pointer" onClick={() => navigate("/account")}>
-                My account
+                {t("navbar.account")}
                 <DropdownMenuShortcut>
                   <User className="w-4 h-4" />
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-2 hover:cursor-pointer" onClick={() => navigate("/admin/dashboard")}>
+                {t("navbar.dashboard")}
+                <DropdownMenuShortcut>
+                  <Wrench className="w-4 h-4" />
                 </DropdownMenuShortcut>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem className="hover:cursor-pointer" onClick={() => logout()} disabled={loading}>
-                Logout
+                {t("navbar.logout")}
                 <DropdownMenuShortcut>
                   <LogOut className="w-4 h-4" />
                 </DropdownMenuShortcut>

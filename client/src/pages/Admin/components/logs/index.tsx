@@ -1,13 +1,16 @@
 import { axiosConfig } from "@/config/axiosConfig";
 import { useState } from "react";
 import { toast } from "sonner";
-import { DataTable } from "./data-table";
 import { getColumns } from "./columns";
+import { DataTable } from "@/components/customs/dataTable";
+import { useTranslation } from "react-i18next";
 
 export const Logs = () => {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [logCount, setLogCount] = useState(0);
+
+  const { t } = useTranslation();
 
   async function fetchAllLogs(page: number = 0, size: number = 10) {
     setLoading(true);
@@ -16,7 +19,7 @@ export const Logs = () => {
       setLogs(response.data.logs);
       setLogCount(response.data.count);
     } catch (error: any) {
-      toast.error(error.response?.data?.error);
+      toast.error(t(error.response.data.error));
     } finally {
       setLoading(false);
     }
@@ -25,20 +28,29 @@ export const Logs = () => {
   async function deleteLog(logId: string) {
     try {
       const response = await axiosConfig.delete(`/logs/${logId}`);
-      toast.success(response.data.message);
+      toast.success(t(response.data.message));
       fetchAllLogs();
     } catch (error: any) {
-      toast.error(error.response);
+      toast.error(t(error.response.data.error));
     }
   }
 
   async function deleteAllLogs() {
     try {
       const response = await axiosConfig.delete(`/logs`);
-      toast.success(response.data.message);
+      toast.success(t(response.data.message));
       fetchAllLogs();
     } catch (error: any) {
-      toast.error(error.response);
+      toast.error(t(error.response.data.error));
+    }
+  }
+
+  function callback(action: string, data: any) {
+    switch (action) {
+      case "deleteAll":
+        deleteAllLogs();
+      default:
+        break;
     }
   }
 
@@ -46,12 +58,14 @@ export const Logs = () => {
     <div>
       <div className="container px-4 mx-auto">
         <DataTable
-          logCount={logCount}
-          columns={getColumns(deleteLog)}
+          columns={getColumns(deleteLog, t)}
           data={logs}
-          fetchLogs={fetchAllLogs}
+          dataCount={logCount}
+          fetchData={fetchAllLogs}
           isLoading={loading}
-          deleteAllLogs={deleteAllLogs}
+          callback={callback}
+          searchElement="message"
+          actions={["deleteAll"]}
         />
       </div>
     </div>

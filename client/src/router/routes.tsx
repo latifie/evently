@@ -11,6 +11,7 @@ import { Dashboard } from "@/pages/Admin/components/dashboard";
 import { Login } from "@/pages/Authentication/login";
 import { Register } from "@/pages/Authentication/register";
 import { Config } from "@/pages/Admin/components/config";
+import { RegisterGoogleForm } from "@/pages/Authentication/registerGoogleForm";
 
 export const Router = () => {
   return (
@@ -34,6 +35,15 @@ export const Router = () => {
         />
 
         <Route
+          path="/register/google"
+          element={
+            <ProtectedRoute authRequired={false}>
+              <RegisterGoogleForm />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/admin"
           element={
             <ProtectedRoute authRequired={true} role="admin">
@@ -50,7 +60,14 @@ export const Router = () => {
       </Route>
 
       <Route element={<LayoutWrapper />}>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute authRequired={true}>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/account"
           element={
