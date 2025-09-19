@@ -1,4 +1,10 @@
 services:
+  mailcatcher:
+    image: docker.io/sj26/mailcatcher:latest
+    ports:
+      - 127.0.0.1:1025:1025
+      - 127.0.0.1:1080:1080
+
   mongodb:
     image: docker.io/mongodb/mongodb-community-server:latest
     ports:
