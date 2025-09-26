@@ -12,7 +12,7 @@
   },
   "pages": {
     "home": {
-      "welcome_message": "Welcome to this boilerplate!"
+      "welcome_message": "Welcome to Evently!"
     },
     "account": {
       "errors": {
