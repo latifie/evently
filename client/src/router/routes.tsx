@@ -36,14 +36,16 @@ export const Router = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/events"
-          element={
-            <ProtectedRoute authRequired={true}>
-              <Events />
-            </ProtectedRoute>
-          }
-        />
+        <Route element={<LayoutWrapper />}>
+          <Route
+            path="/events"
+            element={
+              <ProtectedRoute authRequired={true}>
+                <Events />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
         <Route
           path="/register/google"
           element={
