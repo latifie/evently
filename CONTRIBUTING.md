@@ -5,7 +5,7 @@ Suivre la spécification [Commits Conventionnels](https://www.conventionalcommit
 ```
 <type>[étendue optionnelle]: <description>
 
-type = feat:, fix:, build:, chore:, ci:, docs:, style:, refactor:, perf:, test:
+type = feat:, fix:, build:, chore:, ci:, docs:, style:, localize:, refactor:, perf:, test:
 ```
 
 Exemple :
