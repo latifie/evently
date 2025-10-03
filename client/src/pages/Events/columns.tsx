@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Pencil, Trash } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-export const getEventColumns = (callback: (action: string, data: any) => void): ColumnDef<EventInterface>[] => [
+export const getEventColumns = (callback: (action: string, data: any) => void, currentUserId: string): ColumnDef<EventInterface>[] => [
   {
     accessorKey: "name",
     header: "Name",
@@ -79,16 +79,18 @@ export const getEventColumns = (callback: (action: string, data: any) => void): 
     id: "actions",
     cell: ({ row }) => {
       const event = row.original;
-      return (
-        <div className="flex gap-2">
-          <Button variant="ghost" onClick={() => callback("update", event._id)}>
-            <Pencil className="w-4 h-4" />
-          </Button>
-          <Button variant="ghost" onClick={() => callback("delete", event._id)}>
-            <Trash className="w-4 h-4 text-destructive" />
-          </Button>
-        </div>
-      );
+      if (currentUserId === event.owner._id) {
+        return (
+          <div className="flex gap-2">
+            <Button variant="ghost" onClick={() => callback("update", event._id)}>
+              <Pencil className="w-4 h-4" />
+            </Button>
+            <Button variant="ghost" onClick={() => callback("delete", event._id)}>
+              <Trash className="w-4 h-4 text-destructive" />
+            </Button>
+          </div>
+        );
+      }
     },
   },
 ];

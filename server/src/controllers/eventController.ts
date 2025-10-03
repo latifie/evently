@@ -62,7 +62,7 @@ export const createEvent = async (req, res) => {
   }
 
   try {
-    if (userId && !(await User.findById(userId))) {
+    if (!userId || !(await User.findById(userId))) {
       return res.status(400).json({ error: "No such user" });
     }
 

@@ -21,7 +21,7 @@ eventRouter.get("/", getEvents);
  * @description Creates a new event with the provided data.
  * @middleware verifyToken({ role: "admin" }) - Ensures the user has an admin role to access this route.
  */
-eventRouter.post("/", verifyToken({ role: "admin" }), createEvent);
+eventRouter.post("/", verifyToken(), createEvent);
 
 /**
  * @route PUT /:id
@@ -29,7 +29,7 @@ eventRouter.post("/", verifyToken({ role: "admin" }), createEvent);
  * @param {string} id - The ID of the event to update.
  * @middleware verifyToken({ role: "admin" }) - Ensures the user has an admin role to access this route.
  */
-eventRouter.put("/:id", verifyToken({ role: "admin" }), updateEvent);
+eventRouter.put("/:id", verifyToken(), updateEvent);
 
 /**
  * @route DELETE /:id
@@ -37,4 +37,4 @@ eventRouter.put("/:id", verifyToken({ role: "admin" }), updateEvent);
  * @param {string} id - The ID of the event to delete.
  * @middleware verifyToken({ role: "admin" }) - Ensures the user has an admin role to access this route.
  */
-eventRouter.delete("/:id", verifyToken({ role: "admin" }), deleteEvent);
+eventRouter.delete("/:id", verifyToken(), deleteEvent);
