@@ -77,7 +77,7 @@ export const signupToEvent = async (req, res) => {
     }
 
     // Détermine paid
-    const paid = !isFree;
+    const paid = isFree;
 
     // Crée l'inscription
     const eventSignup = await EventSignup.create({ event: id, user: userId, paid });
