@@ -126,6 +126,7 @@ export const Navbar = () => {
                     .filter((link) => link.auth)
                     .map((link) => (
                       <Button key={link.path} onClick={() => navigate(link.path)} variant="link">
+                        <link.icon className="w-4 h-4" />
                         {link.label}
                       </Button>
                     ))}
