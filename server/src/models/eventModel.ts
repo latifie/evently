@@ -63,4 +63,11 @@ const EventSchema = new mongoose.Schema(
   },
 );
 
+EventSchema.pre("save", function (next) {
+  if (this.isNew) {
+    this.capacityLeft = this.capacity ?? null;
+  }
+  next();
+});
+
 export const Event = mongoose.model("Event", EventSchema);

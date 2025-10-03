@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { EventInterface } from "@/interfaces/Events";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export const getEventColumns = (callback: (action: string, data: any) => void): ColumnDef<EventInterface>[] => [
   {
@@ -52,6 +53,28 @@ export const getEventColumns = (callback: (action: string, data: any) => void): 
       return <div>{price ? `${price} €` : "—"}</div>;
     },
   },
+  {
+    accessorKey: "capacity",
+    header: "Total Capacity",
+    cell: ({ row }) => {
+      const value = row.getValue("capacity") as number | null | undefined;
+      return <div>{value != null ? value : "—"}</div>;
+    },
+  },
+  {
+    accessorKey: "capacityLeft",
+    header: "Available",
+    cell: ({ row }) => {
+      const value = row.getValue("capacityLeft") as number | null | undefined;
+
+      if (value === 0) {
+        return <Badge variant="destructive">Full</Badge>;
+      }
+
+      return <div>{value != null ? value : "—"}</div>;
+    },
+  },
+
   {
     id: "actions",
     cell: ({ row }) => {

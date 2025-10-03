@@ -18,6 +18,7 @@ const eventSchema = z.object({
   end_date: z.string().min(1, "End date is required"),
   category: z.string().min(1, "Category is required"),
   price: z.coerce.number().min(0, "Price must be at least 0").optional(),
+  capacity: z.coerce.number().min(0, "Capacity must be ≥ 0").optional(),
 });
 
 const deleteEventSchema = z.object({
@@ -44,6 +45,7 @@ export const EventForm = ({ dialog, refresh, action, event }: EventFormProps) =>
       end_date: "",
       category: event?.category || "",
       price: event?.price ?? 0,
+      capacity: event?.capacity ?? undefined,
     },
   });
 
@@ -57,6 +59,7 @@ export const EventForm = ({ dialog, refresh, action, event }: EventFormProps) =>
       end_date: event?.end_date ? new Date(event.end_date).toISOString().slice(0, 16) : "",
       category: event?.category || "",
       price: event?.price ?? 0,
+      capacity: event?.capacity ?? undefined,
     },
   });
 
@@ -217,6 +220,19 @@ export const EventForm = ({ dialog, refresh, action, event }: EventFormProps) =>
             <FormLabel>Price (optional, in €)</FormLabel>
             <FormControl>
               <Input type="number" step="0.01" min="0" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="capacity"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Total Capacity (optional)</FormLabel>
+            <FormControl>
+              <Input type="number" min={0} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
