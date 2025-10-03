@@ -4,6 +4,7 @@ import { EventInterface } from "@/interfaces/Events";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { AvatarWithStatusCell } from "@/components/customs/avatarStatusCell";
 
 export const getEventColumns = (callback: (action: string, data: any) => void, currentUserId: string): ColumnDef<EventInterface>[] => [
   {
@@ -37,7 +38,17 @@ export const getEventColumns = (callback: (action: string, data: any) => void, c
     header: "Owner",
     cell: ({ row }) => {
       const owner = row.getValue("owner") as EventInterface["owner"];
-      return <div>{owner?.name ?? "Unknown"}</div>;
+      return (
+        <div className="flex items-center gap-4">
+          <AvatarWithStatusCell user={owner} />
+          <div className="flex flex-col">
+            <span className="font-medium">
+              {owner.name} {owner.forename}
+            </span>
+            <span className="text-sm text-muted-foreground">{owner.username}</span>
+          </div>
+        </div>
+      );
     },
   },
   {

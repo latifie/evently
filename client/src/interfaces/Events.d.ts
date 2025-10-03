@@ -1,3 +1,5 @@
+import { UserInterface } from "./User";
+
 export interface EventInterface {
   _id: string;
   name: string;
@@ -6,12 +8,7 @@ export interface EventInterface {
   start_date: Date;
   end_date: Date;
   avatar?: string;
-  owner: {
-    _id: string;
-    name: string;
-    forename?: string;
-    email?: string;
-  };
+  owner: UserInterface;
   createdAt: string;
   updatedAt: string;
   category: string;
