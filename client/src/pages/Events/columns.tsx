@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Pencil, Trash } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { AvatarWithStatusCell } from "@/components/customs/avatarStatusCell";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { SignupButton } from "@/components/customs/signupButton";
 
 export const getEventColumns = (callback: (action: string, data: any) => void, currentUserId: string): ColumnDef<EventInterface>[] => [
   {
@@ -85,7 +88,14 @@ export const getEventColumns = (callback: (action: string, data: any) => void, c
       return <div>{value != null ? value : "—"}</div>;
     },
   },
-
+  {
+    id: "signup",
+    header: "Inscription",
+    cell: ({ row }) => {
+      const event = row.original;
+      return <SignupButton eventId={event._id} capacityLeft={event.capacityLeft} />;
+    },
+  },
   {
     id: "actions",
     cell: ({ row }) => {

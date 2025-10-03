@@ -29,7 +29,7 @@ export const Events = () => {
     }
   }
 
-  function callback(action: string, id: any) {
+  async function callback(action: string, id: any) {
     setSelectedEvent(undefined);
     if (action === "create") {
       setAction("create");
