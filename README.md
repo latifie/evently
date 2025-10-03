@@ -41,6 +41,7 @@ Welcome to the MERN-APP boilerplate, a complete solution to quickly start a mode
 - [**pnpm**](https://pnpm.io/fr/): v10.x or higher
 - [**Git**](https://git-scm.com/): v2.47.x or higher (for Husky hooks)
 - [**MongoDB**](https://www.mongodb.com/): v8.0.9 or higher
+- [**Docker**](https://docs.docker.com/desktop/): v28.4.0 or higher
 - **A modern browser** (Chrome, Firefox, etc.)
 
 You can check your installed versions using:
@@ -137,6 +138,12 @@ VITE_FIREBASE_APP_ID=XXXX
 8. Finally, click **“Go to Console”** to complete the setup.  
    Your app is now connected to Firebase and ready to support Google OAuth login 🚀
 
+## Run Dockeer 
+Move to the same directory as compose.yaml (evently)
+
+```bash
+docker compose up
+```
 ## Run the Application
 
 ⚡ Install and run the frontend and backend separately in two terminals:
