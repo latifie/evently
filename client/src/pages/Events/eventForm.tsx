@@ -16,6 +16,8 @@ const eventSchema = z.object({
   location: z.string().optional(),
   start_date: z.string().min(1, "Start date is required"),
   end_date: z.string().min(1, "End date is required"),
+  category: z.string().min(1, "Category is required"),
+  price: z.coerce.number().min(0, "Price must be at least 0").optional(),
 });
 
 const deleteEventSchema = z.object({
@@ -40,6 +42,8 @@ export const EventForm = ({ dialog, refresh, action, event }: EventFormProps) =>
       location: "",
       start_date: "",
       end_date: "",
+      category: event?.category || "",
+      price: event?.price ?? 0,
     },
   });
 
@@ -51,6 +55,8 @@ export const EventForm = ({ dialog, refresh, action, event }: EventFormProps) =>
       location: event?.location || "",
       start_date: event?.start_date ? new Date(event.start_date).toISOString().slice(0, 16) : "",
       end_date: event?.end_date ? new Date(event.end_date).toISOString().slice(0, 16) : "",
+      category: event?.category || "",
+      price: event?.price ?? 0,
     },
   });
 
@@ -177,6 +183,40 @@ export const EventForm = ({ dialog, refresh, action, event }: EventFormProps) =>
             <FormLabel>Description</FormLabel>
             <FormControl>
               <Textarea placeholder="Optional description" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="category"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Category</FormLabel>
+            <FormControl>
+              <select {...field} className="w-full border rounded px-3 py-2 text-sm">
+                <option value="">Select a category</option>
+                <option value="Conférence">Conférence</option>
+                <option value="Webinar">Webinar</option>
+                <option value="Atelier">Atelier</option>
+                <option value="Formation">Formation</option>
+                <option value="Autre">Autre</option>
+              </select>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="price"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Price (optional, in €)</FormLabel>
+            <FormControl>
+              <Input type="number" step="0.01" min="0" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

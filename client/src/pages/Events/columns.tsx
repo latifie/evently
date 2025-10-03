@@ -40,6 +40,19 @@ export const getEventColumns = (callback: (action: string, data: any) => void): 
     },
   },
   {
+    accessorKey: "category",
+    header: "Category",
+    cell: ({ row }) => <div>{row.getValue("category")}</div>,
+  },
+  {
+    accessorKey: "price",
+    header: "Price (€)",
+    cell: ({ row }) => {
+      const price = row.getValue("price");
+      return <div>{price ? `${price} €` : "—"}</div>;
+    },
+  },
+  {
     id: "actions",
     cell: ({ row }) => {
       const event = row.original;
