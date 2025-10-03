@@ -1,0 +1,32 @@
+stages:
+  - root
+
+client:
+  stage: root
+  trigger:
+    include: .gitlab-ci/client.yml
+    strategy: mirror
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    # Avoid running the branch pipeline if there already a MR for that branch (and thus running only a MR pipeline in that case).
+    - if: "$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS"
+      when: never
+    - if: "$CI_COMMIT_BRANCH"
+    - changes:
+        - .gitlab-ci/client.yml
+        - client/*
+
+server:
+  stage: root
+  trigger:
+    include: .gitlab-ci/server.yml
+    strategy: mirror
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    # Avoid running the branch pipeline if there already a MR for that branch (and thus running only a MR pipeline in that case).
+    - if: "$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS"
+      when: never
+    - if: "$CI_COMMIT_BRANCH"
+    - changes:
+        - .gitlab-ci/server.yml
+        - server/*

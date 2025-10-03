@@ -1,0 +1,36 @@
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "parent_pipeline"
+
+default:
+  image: docker.io/library/node:lts-alpine
+  cache:
+    - key:
+        files:
+          - client/pnpm-lock.yaml
+      paths:
+        - client/.pnpm-store
+        - client/node_modules
+
+.prepare-pnpm: &prepare-pnpm
+  - corepack enable
+  - corepack prepare --activate
+  - pnpm config set store-dir .pnpm-store
+
+stages:
+  - install
+  - build
+
+install:
+  stage: install
+  script:
+    - cd client
+    - *prepare-pnpm
+    - pnpm install
+
+build:
+  stage: build
+  script:
+    - cd client
+    - *prepare-pnpm
+    - pnpm exec vite build
