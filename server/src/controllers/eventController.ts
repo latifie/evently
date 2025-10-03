@@ -2,6 +2,7 @@ import { Event } from "../models/eventModel.js";
 import { User } from "../models/userModel.js";
 import { createLog } from "./logController.js";
 import { logLevels } from "../utils/enums/logLevels.js";
+import { updateCapacityLeft } from "../utils/updateCapacity.js";
 
 import fs from "fs";
 import path from "path";
@@ -102,6 +103,7 @@ export const updateEvent = async (req, res) => {
 
     const event = await Event.findOneAndUpdate({ _id: id }, { owner: ownerId, ...req.body }, { new: true });
     if (!event) return res.status(404).json({ error: "server.global.errors.no_such_event" });
+    await updateCapacityLeft(id);
 
     res.status(200).json({ event, message: "server.events.messages.event_updated" });
   } catch (err) {

@@ -1,6 +1,8 @@
 import { EventSignup } from "../models/eventSignupModel.js";
+import { Event } from "../models/eventModel.js";
 import { createLog } from "./logController.js";
 import { logLevels } from "../utils/enums/logLevels.js";
+import { updateCapacityLeft } from "../utils/updateCapacity.js";
 
 /**
  * @function getEventSignup
@@ -57,21 +59,43 @@ export const signupToEvent = async (req, res) => {
   const userId = req.userId;
 
   try {
-    const curEventSignup = await EventSignup.find({ event: id, user: userId });
-    if (Object.keys(curEventSignup).length != 0) {
-      return res.status(400).json({ error: "Already exists" });
+    // Vérifie si déjà inscrit
+    const curEventSignup = await EventSignup.findOne({ event: id, user: userId });
+    if (curEventSignup) {
+      return res.status(400).json({ error: "Already signed up" });
     }
 
-    createLog({
+    // Récupère l'événement
+    const event = await Event.findById(id);
+    if (!event) return res.status(404).json({ error: "No such event" });
+
+    const isFree = !event.price || event.price <= 0;
+
+    // Bloque l'inscription si capacityLeft est défini et <= 0
+    if (event.capacityLeft !== null && event.capacityLeft <= 0) {
+      return res.status(400).json({ error: "Event is full" });
+    }
+
+    // Détermine paid
+    const paid = !isFree;
+
+    // Crée l'inscription
+    const eventSignup = await EventSignup.create({ event: id, user: userId, paid });
+    await updateCapacityLeft(id);
+
+    // (optionnel) décrémente capacityLeft
+    if (event.capacityLeft !== null) {
+      event.capacityLeft = event.capacityLeft - 1;
+      await event.save();
+    }
+
+    await createLog({
       message: `Signed-up to event ID '${id}' successfully`,
-      userId: userId,
+      userId,
       level: logLevels.INFO,
     });
 
-    const eventSignup = await EventSignup.create({ event: id, user: userId });
-    if (!eventSignup) return res.status(404).json({ error: "server.global.errors.no_such_event_signup" });
-
-    res.status(200).json({ eventSignup, message: "server.events.messages.event_signup_created" });
+    res.status(200).json({ eventSignup, message: "Event signup created successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -89,6 +113,7 @@ export const deleteEventSignup = async (req, res) => {
   try {
     const eventSignup = await EventSignup.findOneAndDelete({ event: id, user: userId });
     if (!eventSignup) return res.status(400).json({ error: "No such event sign-up" });
+    await updateCapacityLeft(id);
 
     createLog({
       message: `Event sign-up for event ID '${id}' deleted successfully`,

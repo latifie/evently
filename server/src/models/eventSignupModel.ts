@@ -12,6 +12,10 @@ const EventSignupSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    paid: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
