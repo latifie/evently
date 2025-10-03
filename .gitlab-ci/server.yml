@@ -1,0 +1,58 @@
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "parent_pipeline"
+
+default:
+  image: docker.io/library/node:lts-trixie-slim
+  cache:
+    - key:
+        files:
+          - server/pnpm-lock.yaml
+      paths:
+        - server/.pnpm-store
+        - server/node_modules
+
+.prepare-pnpm: &prepare-pnpm
+  - corepack enable
+  - corepack prepare --activate
+  - pnpm config set store-dir .pnpm-store
+
+.install-mongo: &install-mongo
+  - apt-get update && apt-get install -y curl
+  - curl -s -o /tmp/mongodb.deb https://repo.mongodb.org/apt/debian/dists/bookworm/mongodb-org/8.0/main/binary-amd64/mongodb-org-server_8.0.14_amd64.deb
+  - dpkg -i /tmp/mongodb.deb
+  - rm -f /tmp/mongodb.deb
+  - mongod --fork --config /etc/mongod.conf
+
+stages:
+  - install
+  - build
+  - test
+
+install:
+  stage: install
+  script:
+    - cd server
+    - *prepare-pnpm
+    - pnpm install
+
+build:
+  stage: build
+  script:
+    - cd server
+    - *prepare-pnpm
+    - pnpm build
+
+test:
+  stage: test
+  script:
+    - *install-mongo
+    - cd server
+    - *prepare-pnpm
+    - mv .env.example .env
+    - mkdir -p uploads/users/avatars/
+    - pnpm coverage --reporter junit --outputFile junit.xml
+  artifacts:
+    reports:
+      junit:
+        - server/junit.xml
