@@ -14,8 +14,8 @@ const eventSchema = z.object({
   name: z.string().min(1, "Name is required"),
   description: z.string().optional(),
   location: z.string().optional(),
-  start_date: z.string().min(1, "Start date is required"),
-  end_date: z.string().min(1, "End date is required"),
+  startDate: z.string().min(1, "Start date is required"),
+  endDate: z.string().min(1, "End date is required"),
   category: z.string().min(1, "Category is required"),
   price: z.coerce.number().min(0, "Price must be at least 0").optional(),
   capacity: z.coerce.number().min(0, "Capacity must be ≥ 0").optional(),
@@ -41,8 +41,8 @@ export const EventForm = ({ dialog, refresh, action, event }: EventFormProps) =>
       name: "",
       description: "",
       location: "",
-      start_date: "",
-      end_date: "",
+      startDate: "",
+      endDate: "",
       category: event?.category || "",
       price: event?.price ?? 0,
       capacity: event?.capacity ?? undefined,
@@ -55,8 +55,8 @@ export const EventForm = ({ dialog, refresh, action, event }: EventFormProps) =>
       name: event?.name || "",
       description: event?.description || "",
       location: event?.location || "",
-      start_date: event?.start_date ? new Date(event.start_date).toISOString().slice(0, 16) : "",
-      end_date: event?.end_date ? new Date(event.end_date).toISOString().slice(0, 16) : "",
+      startDate: event?.startDate ? new Date(event.startDate).toISOString().slice(0, 16) : "",
+      endDate: event?.endDate ? new Date(event.endDate).toISOString().slice(0, 16) : "",
       category: event?.category || "",
       price: event?.price ?? 0,
       capacity: event?.capacity ?? undefined,
@@ -75,8 +75,8 @@ export const EventForm = ({ dialog, refresh, action, event }: EventFormProps) =>
       setLoading(true);
       await axiosConfig.post("/events", {
         ...values,
-        start_date: new Date(values.start_date).toISOString(),
-        end_date: new Date(values.end_date).toISOString(),
+        startDate: new Date(values.startDate).toISOString(),
+        endDate: new Date(values.endDate).toISOString(),
       });
       toast.success("Event created successfully");
       dialog(false);
@@ -93,8 +93,8 @@ export const EventForm = ({ dialog, refresh, action, event }: EventFormProps) =>
       setLoading(true);
       await axiosConfig.put(`/events/${event?._id}`, {
         ...values,
-        start_date: new Date(values.start_date).toISOString(),
-        end_date: new Date(values.end_date).toISOString(),
+        startDate: new Date(values.startDate).toISOString(),
+        endDate: new Date(values.endDate).toISOString(),
       });
       toast.success("Event updated successfully");
       dialog(false);
@@ -154,7 +154,7 @@ export const EventForm = ({ dialog, refresh, action, event }: EventFormProps) =>
       />
       <FormField
         control={form.control}
-        name="start_date"
+        name="startDate"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Start Date</FormLabel>
@@ -167,7 +167,7 @@ export const EventForm = ({ dialog, refresh, action, event }: EventFormProps) =>
       />
       <FormField
         control={form.control}
-        name="end_date"
+        name="endDate"
         render={({ field }) => (
           <FormItem>
             <FormLabel>End Date</FormLabel>

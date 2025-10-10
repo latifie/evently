@@ -18,12 +18,12 @@ const EventSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    start_date: {
+    startDate: {
       type: Date,
       required: true,
       default: Date.now(),
     },
-    end_date: {
+    endDate: {
       type: Date,
       required: true,
       default: Date.now(),

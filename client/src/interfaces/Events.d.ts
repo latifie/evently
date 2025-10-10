@@ -5,8 +5,8 @@ export interface EventInterface {
   name: string;
   description?: string;
   location?: string;
-  start_date: Date;
-  end_date: Date;
+  startDate: Date;
+  endDate: Date;
   avatar?: string;
   owner: UserInterface;
   createdAt: string;

@@ -16,18 +16,18 @@ export const getEventColumns = (callback: (action: string, data: any) => void, c
     cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
   {
-    accessorKey: "start_date",
+    accessorKey: "startDate",
     header: "Start Date",
     cell: ({ row }) => {
-      const value = row.getValue("start_date");
+      const value = row.getValue("startDate");
       return <div>{format(new Date(value as string), "dd/MM/yyyy HH:mm")}</div>;
     },
   },
   {
-    accessorKey: "end_date",
+    accessorKey: "endDate",
     header: "End Date",
     cell: ({ row }) => {
-      const value = row.getValue("end_date");
+      const value = row.getValue("endDate");
       return <div>{format(new Date(value as string), "dd/MM/yyyy HH:mm")}</div>;
     },
   },
