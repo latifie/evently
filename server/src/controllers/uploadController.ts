@@ -27,7 +27,7 @@ export const updateUserAvatar = async (req: Request, res: Response): Promise<voi
       return;
     }
 
-    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/svg+xml"];
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/svg+xml", "image/webp"];
     if (!allowedTypes.includes(req.file.mimetype)) {
       res.status(400).json({ error: "server.upload.errors.invalid_file_type" });
       return;

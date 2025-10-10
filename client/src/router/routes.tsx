@@ -12,10 +12,12 @@ import { Login } from "@/pages/Authentication/login";
 import { Register } from "@/pages/Authentication/register";
 import { Config } from "@/pages/Admin/components/config";
 import { RegisterGoogleForm } from "@/pages/Authentication/registerGoogleForm";
+import { Events } from "@/pages/Events";
 
 export const Router = () => {
   return (
     <Routes>
+      {/* Without navbar and footer */}
       <Route element={<LayoutWrapper withLayout={false} />}>
         <Route
           path="/login"
@@ -25,6 +27,7 @@ export const Router = () => {
             </ProtectedRoute>
           }
         />
+        {/* With navbar and footer */}
         <Route
           path="/register"
           element={
@@ -33,7 +36,16 @@ export const Router = () => {
             </ProtectedRoute>
           }
         />
-
+        <Route element={<LayoutWrapper />}>
+          <Route
+            path="/events"
+            element={
+              <ProtectedRoute authRequired={true}>
+                <Events />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
         <Route
           path="/register/google"
           element={

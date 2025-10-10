@@ -5,6 +5,8 @@ import { authRouter } from "./authenticationRoutes.js";
 import { configRouter } from "./configRoutes.js";
 import { logRouter } from "./logsRoutes.js";
 import { uploadRouter } from "./uploadRoutes.js";
+import { eventRouter } from "./eventsRoutes.js";
+import { eventSignupRouter } from "./eventsSignupsRoutes.js";
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -14,6 +16,8 @@ const __dirname = path.dirname(__filename);
 export const router: Router = express.Router();
 
 // // API routes
+router.use("/api/events", eventRouter); // Event-related routes
+router.use("/api/signups", eventSignupRouter); // Event sign-up related routes
 router.use("/api/users", userRouter); // User-related routes
 router.use("/api/auth", authRouter); // Authentication routes
 router.use("/api/logs", logRouter); // Logging routes

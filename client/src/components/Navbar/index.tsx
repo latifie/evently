@@ -3,7 +3,7 @@ import { ThemeChanger } from "./themeChanger";
 import { LanguageChanger } from "./languageChanger";
 import { useTranslation } from "react-i18next";
 import { Separator } from "../ui/separator";
-import { Home, House, LogOut, Menu, User, Wrench, X } from "lucide-react";
+import { Home, House, LogOut, Menu, User, Wrench, X, Calendar } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -64,6 +64,12 @@ export const Navbar = () => {
       auth: true,
     },
     {
+      label: t("navbar.events"),
+      path: "/events",
+      icon: Calendar,
+      auth: true,
+    },
+    {
       label: t("navbar.account"),
       path: "/account",
       icon: User,
@@ -84,11 +90,18 @@ export const Navbar = () => {
       icon: House,
     },
     {
+      label: t("navbar.events"),
+      path: "/events",
+      icon: Calendar,
+      auth: true,
+    },
+    {
       label: t("navbar.account"),
       path: "/account",
       icon: User,
       auth: !!authUser,
     },
+
     {
       label: t("navbar.dashboard"),
       path: "/admin/dashboard",
@@ -100,7 +113,7 @@ export const Navbar = () => {
   return (
     <>
       <div className="sticky top-0 left-0 right-0 z-50 border-b bg-background">
-        {/* Desktop */}
+        {/* Desktop Navbar with Hamburger Menu */}
         <div className="hidden select-none md:flex items-center justify-between p-4 px-8 text-accent">
           <div className="text-3xl font-extrabold">
             <Link to="/">{configValues["APP_NAME"]}</Link>
@@ -113,6 +126,7 @@ export const Navbar = () => {
                     .filter((link) => link.auth)
                     .map((link) => (
                       <Button key={link.path} onClick={() => navigate(link.path)} variant="link">
+                        <link.icon className="w-4 h-4" />
                         {link.label}
                       </Button>
                     ))}
