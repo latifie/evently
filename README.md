@@ -1,3 +1,4 @@
+![Pipeline](https://gricad-gitlab.univ-grenoble-alpes.fr/piconf/evently/badges/main/pipeline.svg?ignore_skipped=true)
 ![Coverage](https://gricad-gitlab.univ-grenoble-alpes.fr/piconf/evently/badges/main/coverage.svg)
 
 # MERN-APP BOILERPLATE README
