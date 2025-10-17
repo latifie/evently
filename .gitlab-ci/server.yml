@@ -52,8 +52,15 @@ test:
     - mv .env.example .env
     - mkdir -p uploads/users/avatars/
     - pnpm coverage --reporter junit --outputFile junit.xml
-  coverage: 'All files(?:[^|]*\|){4}\s*(\S+)'
+  coverage: '/All files(?:[^|]*\|){4}\s*(\S+)/'
   artifacts:
     reports:
       junit:
         - server/junit.xml
+
+lint:
+  stage: test
+  script:
+    - cd server
+    - *prepare-pnpm
+    - pnpm exec prettier --check './**/*.{js,ts,json,css,md}'
