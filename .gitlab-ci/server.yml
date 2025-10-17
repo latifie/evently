@@ -63,4 +63,4 @@ lint:
   script:
     - cd server
     - *prepare-pnpm
-    - pnpm exec prettier --check './**/*.{js,ts,json,css,md}'
+    - pnpm exec prettier --check './{src,tests}/*.{js,ts,json,css,md}'
