@@ -52,6 +52,7 @@ test:
     - mv .env.example .env
     - mkdir -p uploads/users/avatars/
     - pnpm coverage --reporter junit --outputFile junit.xml
+  coverage: 'All files(?:[^|]*\|){4}\s*(\S+)'
   artifacts:
     reports:
       junit:
