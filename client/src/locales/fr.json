@@ -163,6 +163,7 @@
         "auth_type": "Type d'authentification",
         "roles": {
           "admin": "Administrateur",
+          "organizer": "Organisateur",
           "user": "Utilisateur"
         },
         "a_user": "un utilisateur",
@@ -199,6 +200,7 @@
           "role": "Rôle",
           "select_role_placeholder": "Sélectionnez un rôle pour le nouvel utilisateur",
           "user": "Utilisateur",
+          "organizer": "Organisateur",
           "admin": "Administrateur",
           "save": "Enregistrer",
           "update": "Mettre à jour",

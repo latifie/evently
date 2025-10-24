@@ -8,8 +8,9 @@ import { AvatarWithStatusCell } from "@/components/customs/avatarStatusCell";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { SignupButton } from "@/components/customs/signupButton";
+import { UserInterface } from "@/interfaces/User";
 
-export const getEventColumns = (callback: (action: string, data: any) => void, currentUserId: string): ColumnDef<EventInterface>[] => [
+export const getEventColumns = (callback: (action: string, data: any) => void, currentUser: UserInterface): ColumnDef<EventInterface>[] => [
   {
     accessorKey: "name",
     header: "Name",
@@ -100,7 +101,7 @@ export const getEventColumns = (callback: (action: string, data: any) => void, c
     id: "actions",
     cell: ({ row }) => {
       const event = row.original;
-      if (currentUserId === event.owner._id) {
+      if (currentUser?.role === "admin" || currentUser._id === event.owner._id) {
         return (
           <div className="flex gap-2">
             <Button variant="ghost" onClick={() => callback("update", event._id)}>

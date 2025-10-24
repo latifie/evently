@@ -6,6 +6,7 @@ import { updateCapacityLeft } from "../utils/updateCapacity.js";
 
 import fs from "fs";
 import path from "path";
+import { isUserAuthorized } from "../utils/isUserRoleAuthorized.js";
 
 /**
  * @function getEvent
@@ -95,6 +96,12 @@ export const updateEvent = async (req, res) => {
   const { name, ownerId } = req.body;
 
   try {
+    console.log(userId);
+    if (!isUserAuthorized(await User.findById(userId), "admin") && !(await Event.findById(id)).owner.equals(userId)) {
+      res.status(403).json({ error: "unauthorized" });
+      return;
+    }
+
     createLog({
       message: `Event '${name}' updated successfully`,
       userId: userId,
@@ -119,6 +126,11 @@ export const updateEvent = async (req, res) => {
 export const deleteEvent = async (req, res) => {
   const { id } = req.params;
   try {
+    if (!isUserAuthorized(await User.findById(req.userId), "admin") && !(await Event.findById(id)).owner.equals(req.userId)) {
+      res.status(403).json({ error: "unauthorized" });
+      return;
+    }
+
     const event = await Event.findOneAndDelete({ _id: id });
     if (!event) return res.status(400).json({ error: "No such event" });
 
