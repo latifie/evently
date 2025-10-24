@@ -20,18 +20,18 @@ eventRouter.get("/", getEvents);
  * @route POST /
  * @description Creates a new event with the provided data.
  */
-eventRouter.post("/", verifyToken(), createEvent);
+eventRouter.post("/", verifyToken({ role: "organizer" }), createEvent);
 
 /**
  * @route PUT /:id
  * @description Updates an existing event by their ID.
  * @param {string} id - The ID of the event to update.
  */
-eventRouter.put("/:id", verifyToken(), updateEvent);
+eventRouter.put("/:id", verifyToken({ role: "organizer" }), updateEvent);
 
 /**
  * @route DELETE /:id
  * @description Deletes a event by their ID.
  * @param {string} id - The ID of the event to delete.
  */
-eventRouter.delete("/:id", verifyToken(), deleteEvent);
+eventRouter.delete("/:id", verifyToken({ role: "organizer" }), deleteEvent);

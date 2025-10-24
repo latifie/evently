@@ -48,7 +48,7 @@ export const Events = () => {
   return (
     <>
       <DataTable
-        columns={getEventColumns(callback, authUser!._id)}
+        columns={getEventColumns(callback, authUser!)}
         data={events}
         dataCount={eventCount}
         fetchData={fetchEvents}

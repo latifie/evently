@@ -204,6 +204,7 @@ export const UserForm = ({ dialog, refresh, action, user }: UserFormProps) => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="user">{t("pages.admin.users_page.form.user")}</SelectItem>
+                      <SelectItem value="organizer">{t("pages.admin.users_page.form.organizer")}</SelectItem>
                       <SelectItem value="admin">{t("pages.admin.users_page.form.admin")}</SelectItem>
                     </SelectContent>
                   </Select>
@@ -320,6 +321,7 @@ export const UserForm = ({ dialog, refresh, action, user }: UserFormProps) => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="user">{t("pages.admin.users_page.form.user")}</SelectItem>
+                      <SelectItem value="organizer">{t("pages.admin.users_page.form.organizer")}</SelectItem>
                       <SelectItem value="admin">{t("pages.admin.users_page.form.admin")}</SelectItem>
                     </SelectContent>
                   </Select>

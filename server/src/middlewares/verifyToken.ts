@@ -4,6 +4,7 @@ import { User } from "../models/userModel.js";
 import { createLog } from "../controllers/logController.js";
 import { logLevels } from "../utils/enums/logLevels.js";
 import mongoose from "mongoose";
+import { isUserAuthorized } from "../utils/isUserRoleAuthorized.js";
 
 interface TokenPayload extends JwtPayload {
   id: string;
@@ -38,7 +39,7 @@ export const verifyToken = ({ role }: VerifyTokenOptions = {}) => {
 
       req.userId = new mongoose.Types.ObjectId(decoded.id);
 
-      if (role && user.role !== role) {
+      if (role && !isUserAuthorized(user, role)) {
         await createLog({
           message: `User ${user.username} attempted to access a restricted route`,
           userId: user._id,
