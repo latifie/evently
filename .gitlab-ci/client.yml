@@ -20,6 +20,7 @@ default:
 stages:
   - install
   - build
+  - test
 
 install:
   stage: install
@@ -34,3 +35,10 @@ build:
     - cd client
     - *prepare-pnpm
     - pnpm exec vite build
+
+lint:
+  stage: test
+  script:
+    - cd client
+    - *prepare-pnpm
+    - pnpm exec prettier --check './{src,tests}/*.{js,ts,json,css,md,tsx}'
