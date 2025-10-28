@@ -13,9 +13,9 @@ export const ProtectedRoute = ({ authRequired, role, children }: { authRequired:
     return <Navigate to="/login" />;
   }
 
-  if (!authRequired && authUser) {
-    return <Navigate to="/" />;
-  }
+  //if (!authRequired && authUser) {
+  //  return <Navigate to="/" />;
+  //}
 
   return children;
 };

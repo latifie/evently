@@ -40,7 +40,7 @@ export const ConfigProvider: React.FC<ConfigProviderProps> = ({ children }) => {
         // Marque les clés manquantes avec une valeur spéciale
         for (const key of missingKeys) {
           if (!fetchedKeys.has(key)) {
-            configMap[key] = "__NOT_FOUND__";
+            configMap[key] = "__EVENTLY__";
           }
         }
 

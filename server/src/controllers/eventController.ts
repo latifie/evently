@@ -96,10 +96,15 @@ export const updateEvent = async (req, res) => {
   const { name, ownerId } = req.body;
 
   try {
-    console.log(userId);
-    if (!isUserAuthorized(await User.findById(userId), "admin") && !(await Event.findById(id)).owner.equals(userId)) {
-      res.status(403).json({ error: "unauthorized" });
-      return;
+    const user = await User.findById(userId);
+    const event = await Event.findById(id);
+
+    if (!event) {
+      return res.status(404).json({ error: "server.global.errors.no_such_event" });
+    }
+
+    if (!isUserAuthorized(user, "admin") && !event.owner.equals(userId)) {
+      return res.status(403).json({ error: "unauthorized" });
     }
 
     createLog({
@@ -108,11 +113,15 @@ export const updateEvent = async (req, res) => {
       level: logLevels.INFO,
     });
 
-    const event = await Event.findOneAndUpdate({ _id: id }, { owner: ownerId, ...req.body }, { new: true });
-    if (!event) return res.status(404).json({ error: "server.global.errors.no_such_event" });
+    const updatedEvent = await Event.findOneAndUpdate(
+      { _id: id },
+      { owner: ownerId, ...req.body },
+      { new: true }
+    );
+
     await updateCapacityLeft(id);
 
-    res.status(200).json({ event, message: "server.events.messages.event_updated" });
+    res.status(200).json({ event: updatedEvent, message: "server.events.messages.event_updated" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -126,13 +135,18 @@ export const updateEvent = async (req, res) => {
 export const deleteEvent = async (req, res) => {
   const { id } = req.params;
   try {
-    if (!isUserAuthorized(await User.findById(req.userId), "admin") && !(await Event.findById(id)).owner.equals(req.userId)) {
-      res.status(403).json({ error: "unauthorized" });
-      return;
+    const user = await User.findById(req.userId);
+    const event = await Event.findById(id);
+
+    if (!event) {
+      return res.status(400).json({ error: "No such event" });
     }
 
-    const event = await Event.findOneAndDelete({ _id: id });
-    if (!event) return res.status(400).json({ error: "No such event" });
+    if (!isUserAuthorized(user, "admin") && !event.owner.equals(req.userId)) {
+      return res.status(403).json({ error: "unauthorized" });
+    }
+
+    await Event.findOneAndDelete({ _id: id });
 
     if (event.avatar) {
       const oldAvatarPath = path.join(process.cwd(), "uploads", "events", "avatars", path.basename(event.avatar));

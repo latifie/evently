@@ -21,13 +21,34 @@ export const Register = () => {
   async function register(values: z.infer<typeof registerSchema>) {
     try {
       setLoading(true);
-      const response = await axiosConfig.post("/auth/register", values);
-      toast.success(t(response.data.message));
-      setAuthUser(response.data.user);
-      localStorage.setItem("accessToken", response.data.accessToken);
-      navigate("/");
+      const response = await axiosConfig.post("/authentication/register", values);
+      
+      // Vérifier que la réponse contient les données attendues
+      if (response?.data) {
+        toast.success(t(response.data.message) || "Inscription réussie");
+        setAuthUser(response.data.user);
+        localStorage.setItem("accessToken", response.data.accessToken);
+        navigate("/");
+      } else {
+        toast.error("Réponse invalide du serveur");
+      }
     } catch (error: any) {
-      toast.error(t(error.response.data.error));
+      console.error("Registration error:", error);
+      
+      // Gestion d'erreur améliorée
+      if (error.response) {
+        // Le serveur a répondu avec un code d'erreur
+        const errorMessage = error.response.data?.error || error.response.data?.message || "Erreur lors de l'inscription";
+        toast.error(t(errorMessage));
+      } else if (error.request) {
+        // La requête a été faite mais pas de réponse reçue
+        console.error("No response received:", error.request);
+        toast.error("Impossible de contacter le serveur. Vérifiez que le backend est démarré.");
+      } else {
+        // Erreur lors de la configuration de la requête
+        console.error("Request setup error:", error.message);
+        toast.error("Erreur lors de la préparation de la requête");
+      }
     } finally {
       setLoading(false);
     }

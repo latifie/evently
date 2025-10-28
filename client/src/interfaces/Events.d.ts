@@ -11,7 +11,7 @@ export interface EventInterface {
   owner: UserInterface;
   createdAt: string;
   updatedAt: string;
-  category: string;
+  category:"Conférence" | "Webinar" | "Atelier" | "Formation" | "Autre";
   price?: number;
   capacity?: number;
   capacityLeft?: number;

@@ -27,7 +27,6 @@ export const Router = () => {
             </ProtectedRoute>
           }
         />
-        {/* With navbar and footer */}
         <Route
           path="/register"
           element={
@@ -36,16 +35,6 @@ export const Router = () => {
             </ProtectedRoute>
           }
         />
-        <Route element={<LayoutWrapper />}>
-          <Route
-            path="/events"
-            element={
-              <ProtectedRoute authRequired={true}>
-                <Events />
-              </ProtectedRoute>
-            }
-          />
-        </Route>
         <Route
           path="/register/google"
           element={
@@ -54,7 +43,34 @@ export const Router = () => {
             </ProtectedRoute>
           }
         />
+      </Route>
 
+      {/* With navbar and footer */}
+      <Route element={<LayoutWrapper />}>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute authRequired={false}>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/events"
+          element={
+            <ProtectedRoute authRequired={false}>
+              <Events />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/account"
+          element={
+            <ProtectedRoute authRequired={true}>
+              <Account />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/admin"
           element={
@@ -69,25 +85,6 @@ export const Router = () => {
           <Route path="logs" element={<Logs />} />
           <Route path="settings" element={<Config />} />
         </Route>
-      </Route>
-
-      <Route element={<LayoutWrapper />}>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute authRequired={true}>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/account"
-          element={
-            <ProtectedRoute authRequired={true}>
-              <Account />
-            </ProtectedRoute>
-          }
-        />
       </Route>
     </Routes>
   );
